@@ -28,4 +28,14 @@ public class ServiceGame {
         }
         return -1;
     }
+
+    public boolean checkAnwser(ArrayList<String> arrAnwser, String resuftAsk) {
+        String[] anwser = resuftAsk.trim().replace("  ", " ").split(" ");
+        for(int i=0;i<arrAnwser.size();i++){
+            if(!arrAnwser.get(i).equals(anwser[i].trim().toUpperCase())){
+                return false;
+            }
+        }
+        return true;
+    }
 }

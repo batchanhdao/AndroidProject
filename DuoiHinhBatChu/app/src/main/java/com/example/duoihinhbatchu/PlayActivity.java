@@ -51,6 +51,7 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     private void setOnClick(){
+        // get event anwser
         gdvAnwser.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
@@ -63,9 +64,11 @@ public class PlayActivity extends AppCompatActivity {
                     showAnwser();
                     showSelect();
                 }
+
             }
         });
 
+        // get event select
         gdvSelect.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
@@ -77,6 +80,14 @@ public class PlayActivity extends AppCompatActivity {
                     arrSelect.set(position, "");
                     showAnwser();
                     showSelect();
+                }
+                if (serviceGame.findIndexEmpty(arrAnwser) == -1) {
+                    if(serviceGame.checkAnwser(arrAnwser, resuft_ask)){
+                        Toast.makeText(getApplicationContext(), "you won", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(), "not true", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
