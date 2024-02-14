@@ -1,11 +1,10 @@
-package com.example.duoihinhbatchu.adapter;
+package com.example.duoihinhbatchu;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-public class MegreData {
-
-    public ArrayList<String> megre(String str){
+public class ServiceGame {
+    public ArrayList<String> megreData(String str){
         ArrayList<String> result = new ArrayList<>();
         ArrayList<String> temp = new ArrayList<>();
         String[] s = str.split(" ");
@@ -21,10 +20,12 @@ public class MegreData {
         System.out.println(result);
         return result;
     }
-
-    public void main(String[] args) {
-        ArrayList<String> s = megre("có công mài sắt có ngày nên kim");
+    public int findIndexEmpty(ArrayList<String> arr) {
+        for (int i = 0; i < arr.size(); i++) {
+            if(arr.get(i).equals("")){
+                return i;
+            }
+        }
+        return -1;
     }
-
-
 }
