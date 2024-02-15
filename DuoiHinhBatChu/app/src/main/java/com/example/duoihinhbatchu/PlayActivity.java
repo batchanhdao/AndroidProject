@@ -6,29 +6,37 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.duoihinhbatchu.adapter.DapAnAdapter;
+import com.example.duoihinhbatchu.entity.Questions;
+import com.example.duoihinhbatchu.model.QuestionsGame;
 
 import java.util.ArrayList;
 
 public class PlayActivity extends AppCompatActivity {
-    private String resuft_ask = "có công mài sắt có ngày nên kim";
+    private String resuft_ask = "";
     private ArrayList<String> arrAnwser;
     private GridView gdvAnwser;
     private ArrayList<String> arrSelect;
     private GridView gdvSelect;
     ServiceGame serviceGame = new ServiceGame();
 
+    Questions questions;
+    QuestionsGame questions_game;
+    int id_question = 1;
+    ImageView img_question;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
         init();
-        createData();
+        showQuestion();
         setOnClick();
-        showAnwser();
-        showSelect();
+
         Toast.makeText(getApplicationContext(), "main", Toast.LENGTH_SHORT).show();
     }
     private void init(){
@@ -36,10 +44,14 @@ public class PlayActivity extends AppCompatActivity {
         arrSelect = new ArrayList<>();
         gdvAnwser = findViewById(R.id.gdvAnwser);
         gdvSelect = findViewById(R.id.gdvSelect);
+        img_question = findViewById(R.id.img_question);
+        questions_game = new QuestionsGame(this);
     }
 
 
     private void createData(){
+        arrAnwser.clear();
+        arrSelect.clear();
 //        megre resuft_ask
         ArrayList<String> megre_select_list = serviceGame.megreData(resuft_ask);
         int n = megre_select_list.size();
@@ -81,10 +93,15 @@ public class PlayActivity extends AppCompatActivity {
                     showAnwser();
                     showSelect();
                 }
+                // check anwser of player
                 if (serviceGame.findIndexEmpty(arrAnwser) == -1) {
+                    // true
                     if(serviceGame.checkAnwser(arrAnwser, resuft_ask)){
+                        id_question++;
+                        showQuestion();
                         Toast.makeText(getApplicationContext(), "you won", Toast.LENGTH_SHORT).show();
                     }
+                    // false
                     else{
                         Toast.makeText(getApplicationContext(), "not true", Toast.LENGTH_SHORT).show();
                     }
@@ -94,7 +111,14 @@ public class PlayActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "event", Toast.LENGTH_SHORT).show();
     }
 
-
+    private  void showQuestion(){
+        questions = questions_game.getQuestion(id_question);
+        resuft_ask = questions.getResult();
+        Glide.with(this).load(questions.getImage()).into(img_question);
+        createData();
+        showAnwser();
+        showSelect();
+    }
 
     private void showAnwser(){
         gdvAnwser.setNumColumns(4);
