@@ -2,10 +2,14 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.myapplication.model.Technology;
 import com.example.myapplication.model.TechnologyAdapter;
@@ -17,14 +21,40 @@ public class TechnologyActivity extends AppCompatActivity {
     private ListView listView;
     TechnologyAdapter technologyAdapter;
     private Technology[] dataList;
+    private TextView topic;
+    private boolean show=true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_technology);
         listView=findViewById(R.id.listTechnology);
+        topic = findViewById(R.id.topic);
         initData();
-        technologyAdapter = new TechnologyAdapter(this, dataList);
-        listView.setAdapter(technologyAdapter); // hiện trên giao diện theo kiểu ListView
+        topic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(show){
+                    technologyAdapter = new TechnologyAdapter(TechnologyActivity.this, dataList);
+                    listView.setAdapter(technologyAdapter); // hiện trên giao diện theo kiểu ListView
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                            for (int j = 0; j < listView.getAdapter().getCount(); j++) {
+                                listView.getChildAt(j).setBackgroundColor(Color.WHITE);
+                            }
+                            listView.getChildAt(position).setBackgroundColor(Color.GREEN);
+                        }
+
+                    });
+                    show = false;
+                }
+                else{
+                    technologyAdapter = new TechnologyAdapter(TechnologyActivity.this, new Technology[0]);
+                    listView.setAdapter(technologyAdapter); // hiện trên giao diện theo kiểu ListView
+                    show = true;
+                }
+            }
+        });
     }
 
     private void initData() {

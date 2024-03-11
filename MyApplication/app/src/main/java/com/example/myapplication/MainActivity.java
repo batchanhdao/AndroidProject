@@ -35,7 +35,18 @@ public class MainActivity extends AppCompatActivity {
         sub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String res = cb1.getText().toString() + ", " + cb2.getText().toString() + ", " + cb3.getText().toString();
+
+                String res = "";
+                if(cb1.isChecked()){
+                    res += cb1.getText().toString() + ", ";
+                }
+                if(cb2.isChecked()){
+                    res += cb2.getText().toString() + ", ";
+                }
+                if(cb3.isChecked()){
+                    res += cb3.getText().toString() + ", ";
+                }
+                res = res.substring(0, res.length()-2);
                 if(rb1.isChecked()){
                     res += '\n' + rb1.getText().toString();
                 }else{

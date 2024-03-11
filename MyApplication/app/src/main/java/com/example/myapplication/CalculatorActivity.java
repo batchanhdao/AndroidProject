@@ -24,14 +24,15 @@ public class CalculatorActivity extends AppCompatActivity {
         cal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                double n1 = Double.parseDouble(in1.getText().toString());
-                double n2 = Double.parseDouble(in2.getText().toString());
-                String ope = spOperator.getSelectedItem().toString();
                 try {
+                    double n1 = Double.parseDouble(in1.getText().toString());
+                    double n2 = Double.parseDouble(in2.getText().toString());
+                    String ope = spOperator.getSelectedItem().toString();
                     String res = Cal(n1, n2, ope);
                     result.setText(res);
                 } catch (Exception e) {
                     System.out.println(e);
+                    result.setText("error! Please enter number");
                 }
             }
         });

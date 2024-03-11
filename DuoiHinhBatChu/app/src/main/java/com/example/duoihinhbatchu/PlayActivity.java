@@ -111,7 +111,7 @@ public class PlayActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "event", Toast.LENGTH_SHORT).show();
     }
 
-    private  void showQuestion(){
+    private void showQuestion(){
         questions = questions_game.getQuestion(id_question);
         resuft_ask = questions.getResult();
         Glide.with(this).load(questions.getImage()).into(img_question);
@@ -128,5 +128,52 @@ public class PlayActivity extends AppCompatActivity {
     private void showSelect(){
         gdvSelect.setNumColumns(4);
         gdvSelect.setAdapter(new DapAnAdapter(this, 0, arrSelect));
+    }
+
+
+    public void onClickHelp(View view) {
+        String[] anwser = resuft_ask.trim().replace("  ", " ").split(" ");
+        for(int i=0; i<arrAnwser.size(); i++){
+            String word =  anwser[i].trim().toUpperCase();
+            String word1 = arrAnwser.get(i);
+            boolean indexSelect = true;
+            if(!word1.equals(word)){
+                arrAnwser.set(i, word);
+                for(int j=0; j<arrSelect.size();j++){
+                    if(arrSelect.get(j).equals(word)){
+                        arrSelect.set(j, word1);
+                        indexSelect = false;
+                        break;
+                    }
+                }
+                if(indexSelect){
+                    for(int j=arrAnwser.size()-1; j>i;j--){
+                        if(arrAnwser.get(j).equals(word)){
+                            arrAnwser.set(j,"");
+                            arrSelect.set(serviceGame.findIndexEmpty(arrSelect), word1);
+                            break;
+                        }
+                    }
+                }
+
+                if(serviceGame.checkAnwser(arrAnwser, resuft_ask)){
+                    id_question++;
+                    showQuestion();
+                    Toast.makeText(getApplicationContext(), "you won", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    showAnwser();
+                    showSelect();
+                }
+                return;
+            }
+        }
+
+    }
+
+    public void onCLickNext(View view) {
+        id_question++;
+        showQuestion();
+        Toast.makeText(getApplicationContext(), "Next", Toast.LENGTH_SHORT).show();
     }
 }
