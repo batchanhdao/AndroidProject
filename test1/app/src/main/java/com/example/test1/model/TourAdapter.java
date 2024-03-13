@@ -51,15 +51,18 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.CatViewHolder>
         return this.backupCats;
     }
 
+//    search
     public void filterCats(List<Tour> filteredCats) {
         this.cats = filteredCats;
         notifyDataSetChanged();
     }
 
+//    get to update
     public Tour getCat(int position) {
         return this.cats.get(position);
     }
 
+//    select view
     @NonNull
     @Override
     public CatViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -67,6 +70,7 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.CatViewHolder>
         return new CatViewHolder(itemView);
     }
 
+//    show data theo view
     @Override
     public void onBindViewHolder(@NonNull CatViewHolder holder, int position) {
         Tour cat = this.cats.get(position);

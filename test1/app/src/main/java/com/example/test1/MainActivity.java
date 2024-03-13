@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements TourAdapter.CatIt
     }
 
     private Spinner spinner;
-    private int[] images = {R.drawable.xemay, R.drawable.oto, R.drawable.maybay};
+    private int[] images = {R.drawable.maybay, R.drawable.oto, R.drawable.xemay};
     private RecyclerView recyclerView;
     private TourAdapter catAdapter;
     private EditText nameET, descriptionET;
@@ -40,22 +40,26 @@ public class MainActivity extends AppCompatActivity implements TourAdapter.CatIt
     private SearchView searchView;
 
 
+    // click search
     private void setOnQuery() {
         this.searchView.setOnQueryTextListener(this);
     }
 
+
+//    click add/update
     private void setOnClick() {
         this.addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Tour cat = new Tour();
+//                get data
                 int i = spinner.getSelectedItemPosition();
                 String nameText = nameET.getText().toString();
                 String descText = descriptionET.getText().toString();
 
                 try {
+//                    check and save data
                     int img = images[i];
-
                     cat.setImg(img);
                     cat.setName(nameText);
                     cat.setDescription(descText);
@@ -92,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements TourAdapter.CatIt
         });
     }
 
+//    ánh xạ view
     private void initView() {
         this.spinner = findViewById(R.id.imgSpinnerId);
         SpinnerAdapter spinnerAdapter = new SpinnerAdapter(this);
@@ -103,14 +108,17 @@ public class MainActivity extends AppCompatActivity implements TourAdapter.CatIt
         this.updateBtn = findViewById(R.id.updateBtn);
         this.updateBtn.setEnabled(false);
         this.catAdapter = new TourAdapter(this);
+//        event click list data
         this.catAdapter.setClickListener(this);
         this.searchView = findViewById(R.id.seachId);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         this.recyclerView.setLayoutManager(linearLayoutManager);
+//        call method show data from TourAdapter
         this.recyclerView.setAdapter(this.catAdapter);
     }
 
+//    click 1 object
     @Override
     public void onItemClick(View view, int position) {
         this.addBtn.setEnabled(false);
@@ -136,6 +144,7 @@ public class MainActivity extends AppCompatActivity implements TourAdapter.CatIt
         spinner.setSelection(indexOfImgInSpinner, true);
     }
 
+//    logic search
     @Override
     public boolean onQueryTextSubmit(String query) {
         return false;
