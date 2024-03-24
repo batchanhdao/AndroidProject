@@ -21,14 +21,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements TourAdapter.CatItemListener, SearchView.OnQueryTextListener {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        this.initView();
-        this.setOnClick();
-        this.setOnQuery();
-    }
 
     private Spinner spinner;
     private int[] images = {R.drawable.maybay, R.drawable.oto, R.drawable.xemay};
@@ -39,6 +31,36 @@ public class MainActivity extends AppCompatActivity implements TourAdapter.CatIt
     private int selectedItemIndex;
     private SearchView searchView;
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        this.initView();
+        this.setOnClick();
+        this.setOnQuery();
+    }
+
+    //    ánh xạ view
+    private void initView() {
+        this.spinner = findViewById(R.id.imgSpinnerId);
+        SpinnerAdapter spinnerAdapter = new SpinnerAdapter(this);
+        this.spinner.setAdapter(spinnerAdapter);
+        this.nameET = findViewById(R.id.nameId);
+        this.descriptionET = findViewById(R.id.descriptionId);
+        this.recyclerView = findViewById(R.id.recycleViewId);
+        this.addBtn = findViewById(R.id.addBtn);
+        this.updateBtn = findViewById(R.id.updateBtn);
+        this.updateBtn.setEnabled(false);
+        this.catAdapter = new TourAdapter(this);
+//        event click list data
+        this.catAdapter.setClickListener(this);
+        this.searchView = findViewById(R.id.seachId);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+        this.recyclerView.setLayoutManager(linearLayoutManager);
+//        call method show data from TourAdapter
+        this.recyclerView.setAdapter(this.catAdapter);
+    }
 
     // click search
     private void setOnQuery() {
@@ -96,27 +118,6 @@ public class MainActivity extends AppCompatActivity implements TourAdapter.CatIt
         });
     }
 
-//    ánh xạ view
-    private void initView() {
-        this.spinner = findViewById(R.id.imgSpinnerId);
-        SpinnerAdapter spinnerAdapter = new SpinnerAdapter(this);
-        this.spinner.setAdapter(spinnerAdapter);
-        this.nameET = findViewById(R.id.nameId);
-        this.descriptionET = findViewById(R.id.descriptionId);
-        this.recyclerView = findViewById(R.id.recycleViewId);
-        this.addBtn = findViewById(R.id.addBtn);
-        this.updateBtn = findViewById(R.id.updateBtn);
-        this.updateBtn.setEnabled(false);
-        this.catAdapter = new TourAdapter(this);
-//        event click list data
-        this.catAdapter.setClickListener(this);
-        this.searchView = findViewById(R.id.seachId);
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
-        this.recyclerView.setLayoutManager(linearLayoutManager);
-//        call method show data from TourAdapter
-        this.recyclerView.setAdapter(this.catAdapter);
-    }
 
 //    click 1 object
     @Override

@@ -27,7 +27,7 @@ public class DapAnAdapter extends ArrayAdapter<String> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent){
         if(convertView == null){
             LayoutInflater inflater = (LayoutInflater) my_context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.item_questions, null, true);
+            convertView = inflater.inflate(R.layout.item_text, null, true);
         }
         TextView txvAnwser = convertView.findViewById(R.id.txvAnwser);
         txvAnwser.setText(this.arr.get(position));
